@@ -13,8 +13,16 @@
 ## Install
 
 ```sh
-$ npm install @seneca/search-mini
+$ npm install seneca@^4 @seneca/search-mini
 ```
+
+Requires Node.js 24 or later and Seneca 4. Seneca 3 users stay on
+`@seneca/search-mini@0.1`.
+
+The `search` option is required. It holds the
+[MiniSearch options](https://lucaong.github.io/minisearch), and must at least
+name the document `fields` to index. Without it the plugin fails to load
+with the error code `invalid_search`.
 
 ## Quick Example
 

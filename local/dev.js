@@ -1,6 +1,6 @@
 const Assert = require('assert')
 const Seneca = require('seneca')
-const SenecaSearchMem = require('../search-mem')
+const SenecaSearchMem = require('../search-mini')
 
 
 async function run() {
@@ -16,9 +16,6 @@ async function run() {
       searchOptions: {}
     }
   })
-
-
-  seneca.use('promisify')
 
 
   const docs = [

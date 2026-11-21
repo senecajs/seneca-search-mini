@@ -1,5 +1,3 @@
-// const Joi = require('@hapi/joi')
-
 module.exports = {
   describe_search_add: {
     desc:

@@ -6,10 +6,7 @@ function search_mem(options) {
 
 
   if (null == options.search) {
-    return {ok: false,
-            why: 'invalid-search',
-    }
-    // return seneca.fail('The "search" option is required')
+    seneca.fail('invalid_search')
   }
 
   const { search: search_config } = options
@@ -39,28 +36,28 @@ function search_mem(options) {
 
   seneca.add('sys:search,cmd:add', function (msg, reply) {
     if (null == msg.doc) {
-      return {
+      return reply(null, {
         ok: false,
         why: 'invalid-field',
         details: {
           path: ['doc'],
           why_exactly: 'required'
         }
-      }
+      })
     }
 
     const { doc } = msg
 
 
-    if (null == typeof doc.id) {
-      return {
+    if (null == doc.id) {
+      return reply(null, {
         ok: false,
         why: 'invalid-field',
         details: {
           path: ['doc', 'id'],
           why_exactly: 'required'
         }
-      }
+      })
     }
 
     const { id: doc_id } = doc
@@ -83,14 +80,14 @@ function search_mem(options) {
     const params = msg.params || {}
 
     if (null == msg.query) {
-      return {
+      return reply(null, {
         ok: false,
         why: 'invalid-field',
         details: {
           path: ['query'],
           why_exactly: 'required'
         }
-      }
+      })
     }
 
     const { query } = msg
@@ -128,14 +125,14 @@ function search_mem(options) {
 
   seneca.add('sys:search,cmd:remove', async function (msg, reply) {
     if (null == msg.id) {
-      return {
+      return reply(null, {
         ok: false,
         why: 'invalid-field',
         details: {
           path: ['id'],
           why_exactly: 'required'
         }
-      }
+      })
     }
 
     const { id: doc_id } = msg
@@ -157,14 +154,14 @@ function search_mem(options) {
   
   seneca.add('sys:search,cmd:add_all', function (msg, reply) {
     if (null == msg.docs) {
-      return {
+      return reply(null, {
         ok: false,
         why: 'invalid-docs-argument',
         details: {
           path: ['docs'],
           why_exactly: 'required'
         }
-      }
+      })
     }
 
     const { docs } = msg
@@ -190,5 +187,11 @@ function search_mem(options) {
   return
 }
 
+
+search_mem.errors = {
+  invalid_search:
+    'The search option is required. It holds the MiniSearch options, ' +
+    'such as fields, the document fields to index.',
+}
 
 module.exports = search_mem
